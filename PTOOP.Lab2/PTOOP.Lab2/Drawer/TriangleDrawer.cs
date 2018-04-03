@@ -14,9 +14,9 @@ namespace PTOOP.Lab2.Drawer
             using (var path = new SKPath())
             {
                 path.MoveTo(x, y);
-                path.LineTo(x - 30, y);
-                path.LineTo(x, y - 50);
-                path.LineTo(x + 30, y);
+                path.LineTo(x - 50, y);
+                path.LineTo(x, y - 90);
+                path.LineTo(x + 50, y);
                 path.LineTo(x, y);
                 path.Close();
 

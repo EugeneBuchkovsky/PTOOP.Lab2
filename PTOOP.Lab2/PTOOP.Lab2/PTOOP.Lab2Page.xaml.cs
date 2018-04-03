@@ -16,15 +16,19 @@ namespace PTOOP.Lab2
 
 		private IDrawer drawer;
 
+		public SKCanvasView canvasView;
+
 		public PTOOP_Lab2Page()
 		{
 			InitializeComponent();
 
-			var btnLayout = new StackLayout { Orientation = StackOrientation.Horizontal, VerticalOptions = LayoutOptions.StartAndExpand};
+			var btnLayout = new StackLayout { Orientation = StackOrientation.Horizontal, VerticalOptions = LayoutOptions.StartAndExpand, Margin = new Thickness(20), HeightRequest = 100 };
 
 			Title = "Lab 2";
 
-			SKCanvasView canvasView = new SKCanvasView();
+			canvasView = new SKCanvasView();
+			canvasView.VerticalOptions = LayoutOptions.StartAndExpand;
+			canvasView.HeightRequest = 400;
 			canvasView.PaintSurface += OnCanvasViewPaintSurface;
 			//Content = canvasView;
 
@@ -41,7 +45,7 @@ namespace PTOOP.Lab2
 			{ 
 				drawer = new CircleDrawer(); 
 				SetDefaultColor();
-				_dotBtn.BackgroundColor = Color.Azure;
+				_circleBtn.BackgroundColor = Color.Azure;
 			};
 
 			_rectBtn = new Button { Text = "Rectangle", BackgroundColor = Color.White };
@@ -49,7 +53,7 @@ namespace PTOOP.Lab2
 			{ 
 				drawer = new RectangleDrawer(); 
 				SetDefaultColor();
-				_dotBtn.BackgroundColor = Color.Azure;
+				_rectBtn.BackgroundColor = Color.Azure;
 			};
 
 			_ellipseBtn = new Button { Text = "Ellipse", BackgroundColor = Color.White };
@@ -57,7 +61,7 @@ namespace PTOOP.Lab2
 			{ 
 				drawer = new EllipseDrawer(); 
 				SetDefaultColor();
-				_dotBtn.BackgroundColor = Color.Azure;
+				_ellipseBtn.BackgroundColor = Color.Azure;
 			};
 
 			_triBtn = new Button { Text = "Triangle", BackgroundColor = Color.White };
@@ -65,7 +69,7 @@ namespace PTOOP.Lab2
 			{ 
 				drawer = new TriangleDrawer(); 
 				SetDefaultColor();
-				_dotBtn.BackgroundColor = Color.Azure;
+				_triBtn.BackgroundColor = Color.Azure;
 			};
 
 			_lineBtn = new Button { Text = "Line", BackgroundColor = Color.White };
@@ -73,7 +77,7 @@ namespace PTOOP.Lab2
 			{ 
 				drawer = new LineDrawer(); 
 				SetDefaultColor();
-				_dotBtn.BackgroundColor = Color.Azure;
+				_lineBtn.BackgroundColor = Color.Azure;
 			};
 
 
@@ -84,17 +88,21 @@ namespace PTOOP.Lab2
 			btnLayout.Children.Add(_triBtn);
 			btnLayout.Children.Add(_lineBtn);
 
-			this.Content = btnLayout;
+			var mainstack = new StackLayout { Orientation = StackOrientation.Vertical };
+			mainstack.Children.Add(btnLayout);
+			mainstack.Children.Add(canvasView);
 
-			var gesture = new TapGestureRecognizer();
-			gesture.Tapped += (sender, e) =>
-			{
+			this.Content = mainstack;
+
+			//var gesture = new TapGestureRecognizer();
+			//gesture.Tapped += (sender, e) =>
+			//{
 				
-				//ScaleCoef = ScaleCoef == 1 ? 3 : 1;
-				//hslCanvasView.InvalidateSurface();
-			};
-			gesture.NumberOfTapsRequired = 2;
-			canvasView.GestureRecognizers.Add(gesture);
+			//	//ScaleCoef = ScaleCoef == 1 ? 3 : 1;
+			//	//hslCanvasView.InvalidateSurface();
+			//};
+			//gesture.NumberOfTapsRequired = 2;
+			//canvasView.GestureRecognizers.Add(gesture);
 		}
 
 		private void SetDefaultColor()
@@ -105,6 +113,8 @@ namespace PTOOP.Lab2
 			_ellipseBtn.BackgroundColor = Color.White;
 			_triBtn.BackgroundColor = Color.White;
 			_lineBtn.BackgroundColor = Color.White;
+
+			canvasView.InvalidateSurface();
 		}
 
 		void OnCanvasViewPaintSurface(object sender, SKPaintSurfaceEventArgs args)
@@ -119,7 +129,7 @@ namespace PTOOP.Lab2
 			{
 				Style = SKPaintStyle.Stroke,
 				Color = Color.Red.ToSKColor(),
-				StrokeWidth = 50
+				StrokeWidth = 10
 			};
 
 			if (drawer != null)

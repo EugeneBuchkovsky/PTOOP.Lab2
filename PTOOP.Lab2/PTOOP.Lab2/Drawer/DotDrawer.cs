@@ -11,7 +11,7 @@ namespace PTOOP.Lab2.Drawer
 
 		public override void Draw(SKCanvas canvas, SKPaint paint, int x, int y)
 		{
-			canvas.DrawCircle(x, y, 5, paint);
+			canvas.DrawCircle(x, y, 1, paint);
 		}
 	}
 }
